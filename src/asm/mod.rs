@@ -203,4 +203,40 @@ extern "C" {
         link_name = "_x86_64_asm_write_rflags"
     )]
     pub(crate) fn x86_64_asm_write_rflags(val: u64);
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vmxon"
+    )]
+    pub(crate) fn x86_64_asm_vmxon(paddr: u64) -> bool;
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vmxoff"
+    )]
+    pub(crate) fn x86_64_asm_vmxoff() -> bool;
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vmread"
+    )]
+    pub(crate) fn x86_64_asm_vmread(field: u64, value: &mut u64) -> bool;
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vmwrite"
+    )]
+    pub(crate) fn x86_64_asm_vmwrite(field: u64, value: u64) -> bool;
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vmptrld"
+    )]
+    pub(crate) fn x86_64_asm_vmptrld(paddr: u64) -> bool;
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vmclear"
+    )]
+    pub(crate) fn x86_64_asm_vmclear(paddr: u64) -> bool;
 }

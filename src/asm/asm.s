@@ -233,3 +233,45 @@ _x86_64_asm_wrmsr:
 _x86_64_asm_hlt:
     hlt
     retq
+
+.global _x86_64_asm_vmxon
+.p2align 4
+_x86_64_asm_vmxon:
+    vmxon (%rdi)
+    setna %al
+    retq
+
+.global _x86_64_asm_vmxoff
+.p2align 4
+_x86_64_asm_vmxoff:
+    vmxoff
+    setna %al
+    retq
+
+.global _x86_64_asm_vmread
+.p2align 4
+_x86_64_asm_vmread:
+    vmread %rdi, (%rsi)
+    setna %al
+    retq
+
+.global _x86_64_asm_vmwrite
+.p2align 4
+_x86_64_asm_vmwrite:
+    vmwrite %rsi, %rdi
+    setna %al
+    retq
+
+.global _x86_64_asm_vmptrld
+.p2align 4
+_x86_64_asm_vmptrld:
+    vmclear (%rdi)
+    setna %al
+    retq
+
+.global _x86_64_asm_vmclear
+.p2align 4
+_x86_64_asm_vmclear:
+    vmclear (%rdi)
+    setna %al
+    retq
