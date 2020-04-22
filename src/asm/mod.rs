@@ -208,7 +208,7 @@ extern "C" {
         any(target_env = "gnu", target_env = "musl"),
         link_name = "_x86_64_asm_vmxon"
     )]
-    pub(crate) fn x86_64_asm_vmxon(paddr: u64) -> bool;
+    pub(crate) fn x86_64_asm_vmxon(paddr: &u64) -> bool;
 
     #[cfg_attr(
         any(target_env = "gnu", target_env = "musl"),
@@ -232,11 +232,29 @@ extern "C" {
         any(target_env = "gnu", target_env = "musl"),
         link_name = "_x86_64_asm_vmptrld"
     )]
-    pub(crate) fn x86_64_asm_vmptrld(paddr: u64) -> bool;
+    pub(crate) fn x86_64_asm_vmptrld(paddr: &u64) -> bool;
 
     #[cfg_attr(
         any(target_env = "gnu", target_env = "musl"),
         link_name = "_x86_64_asm_vmclear"
     )]
-    pub(crate) fn x86_64_asm_vmclear(paddr: u64) -> bool;
+    pub(crate) fn x86_64_asm_vmclear(paddr: &u64) -> bool;
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vminvpt"
+    )]
+    pub(crate) fn x86_64_asm_invept(
+        invalidation: u64,
+        eptp: *const crate::instructions::vmx::InvEptDescriptor,
+    ) -> bool;
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_invvpid"
+    )]
+    pub(crate) fn x86_64_asm_invvpid(
+        invalidation: u64,
+        eptp: *const crate::instructions::vmx::InvVpidDescriptor,
+    ) -> bool;
 }

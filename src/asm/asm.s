@@ -251,7 +251,7 @@ _x86_64_asm_vmxoff:
 .global _x86_64_asm_vmread
 .p2align 4
 _x86_64_asm_vmread:
-    vmread %rdi, (%rsi)
+    vmread %rdi, %rsi
     setna %al
     retq
 
@@ -273,5 +273,19 @@ _x86_64_asm_vmptrld:
 .p2align 4
 _x86_64_asm_vmclear:
     vmclear (%rdi)
+    setna %al
+    retq
+
+.global _x86_64_asm_invpt
+.p2align 4
+_x86_64_asm_invpt:
+    invept (%rdi), %rsi
+    setna %al
+    retq
+
+.global _x86_64_asm_invvpid
+.p2align 4
+_x86_64_asm_invvpid:
+    invvpid (%rdi), %rsi
     setna %al
     retq
