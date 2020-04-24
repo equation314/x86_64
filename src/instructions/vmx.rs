@@ -68,9 +68,9 @@ pub unsafe fn vmxoff() -> Option<()> {
 /// This function is unsafe because the caller must ensure that the given
 /// VMCS `field` is supported and the relevant VMCS pointer is valid.
 #[inline]
-pub unsafe fn vmread(field: u64) -> Option<u64> {
+pub unsafe fn vmread(field: usize) -> Option<usize> {
     let err: bool;
-    let value: u64;
+    let value: usize;
 
     #[cfg(feature = "inline_asm")]
     asm!("vmread $2, $1; setna $0" : "=r" (err), "=r" (value) : "r" (field) : "cc" : "volatile");
@@ -96,7 +96,7 @@ pub unsafe fn vmread(field: u64) -> Option<u64> {
 /// This function is unsafe because the caller must ensure that the given
 /// VMCS `field` is supported and the relevant VMCS pointer is valid.
 #[inline]
-pub unsafe fn vmwrite(field: u64, value: u64) -> Option<()> {
+pub unsafe fn vmwrite(field: usize, value: usize) -> Option<()> {
     let err: bool;
 
     #[cfg(feature = "inline_asm")]
@@ -166,7 +166,7 @@ pub unsafe fn vmclear(addr: PhysAddr) -> Option<()> {
 
 /// The INVEPT type.
 #[derive(Debug)]
-#[repr(u64)]
+#[repr(usize)]
 pub enum InvEptType {
     /// The logical processor invalidates all mappings associated with bits
     /// 51:12 of the EPT pointer (EPTP) specified in the INVEPT descriptor.
@@ -204,7 +204,7 @@ pub unsafe fn invept(invalidation: InvEptType, eptp: u64) -> Option<()> {
 
     #[cfg(not(feature = "inline_asm"))]
     {
-        err = crate::asm::x86_64_asm_invept(invalidation as u64, &descriptor);
+        err = crate::asm::x86_64_asm_invept(invalidation as usize, &descriptor);
     }
 
     if err {
@@ -216,7 +216,7 @@ pub unsafe fn invept(invalidation: InvEptType, eptp: u64) -> Option<()> {
 
 /// The INVVPID type.
 #[derive(Debug)]
-#[repr(u64)]
+#[repr(usize)]
 pub enum InvVpidType {
     /// Individual-address invalidation: the logical processor invalidates
     /// mappings for the linear address and VPID specified in the INVVPID
@@ -279,7 +279,7 @@ pub unsafe fn invvpid(invalidation: InvVpidType, vpid: u16, addr: VirtAddr) -> O
 
     #[cfg(not(feature = "inline_asm"))]
     {
-        err = crate::asm::x86_64_asm_invvpid(invalidation as u64, &descriptor);
+        err = crate::asm::x86_64_asm_invvpid(invalidation as usize, &descriptor);
     }
 
     if err {

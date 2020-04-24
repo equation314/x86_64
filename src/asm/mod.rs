@@ -220,13 +220,13 @@ extern "C" {
         any(target_env = "gnu", target_env = "musl"),
         link_name = "_x86_64_asm_vmread"
     )]
-    pub(crate) fn x86_64_asm_vmread(field: u64, value: &mut u64) -> bool;
+    pub(crate) fn x86_64_asm_vmread(field: usize, value: &mut usize) -> bool;
 
     #[cfg_attr(
         any(target_env = "gnu", target_env = "musl"),
         link_name = "_x86_64_asm_vmwrite"
     )]
-    pub(crate) fn x86_64_asm_vmwrite(field: u64, value: u64) -> bool;
+    pub(crate) fn x86_64_asm_vmwrite(field: usize, value: usize) -> bool;
 
     #[cfg_attr(
         any(target_env = "gnu", target_env = "musl"),
@@ -245,7 +245,7 @@ extern "C" {
         link_name = "_x86_64_asm_vminvpt"
     )]
     pub(crate) fn x86_64_asm_invept(
-        invalidation: u64,
+        invalidation: usize,
         eptp: *const crate::instructions::vmx::InvEptDescriptor,
     ) -> bool;
 
@@ -254,7 +254,7 @@ extern "C" {
         link_name = "_x86_64_asm_invvpid"
     )]
     pub(crate) fn x86_64_asm_invvpid(
-        invalidation: u64,
+        invalidation: usize,
         eptp: *const crate::instructions::vmx::InvVpidDescriptor,
     ) -> bool;
 }
