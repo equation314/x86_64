@@ -289,3 +289,15 @@ _x86_64_asm_invvpid:
     invvpid (%rdi), %rsi
     setna %al
     retq
+
+.global _x86_64_asm_vmlaunch
+.p2align 4
+_x86_64_asm_vmlaunch:
+    vmlaunch
+    retq
+
+.global _x86_64_asm_vmresume
+.p2align 4
+_x86_64_asm_vmresume:
+    vmresume
+    retq

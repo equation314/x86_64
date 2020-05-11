@@ -257,4 +257,16 @@ extern "C" {
         invalidation: usize,
         eptp: *const crate::instructions::vmx::InvVpidDescriptor,
     ) -> bool;
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vmlaunch"
+    )]
+    pub(crate) fn x86_64_asm_vmlaunch();
+
+    #[cfg_attr(
+        any(target_env = "gnu", target_env = "musl"),
+        link_name = "_x86_64_asm_vmresume"
+    )]
+    pub(crate) fn x86_64_asm_vmresume();
 }

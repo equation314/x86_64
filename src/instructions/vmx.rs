@@ -288,3 +288,33 @@ pub unsafe fn invvpid(invalidation: InvVpidType, vpid: u16, addr: VirtAddr) -> O
         Some(())
     }
 }
+
+/// Launch virtual machine managed by current VMCS.
+///
+/// ## Safety
+///
+/// This function is unsafe because the caller must ensure the launch state of
+/// current VMCS is “clear”.
+#[inline]
+pub unsafe fn vmlaunch() {
+    #[cfg(feature = "inline_asm")]
+    asm!("vmlaunch" :::: "volatile");
+
+    #[cfg(not(feature = "inline_asm"))]
+    crate::asm::x86_64_asm_vmlaunch();
+}
+
+/// Resume virtual machine managed by current VMCS.
+///
+/// ## Safety
+///
+/// This function is unsafe because the caller must ensure the launch state of
+/// current VMCS is launched.
+#[inline]
+pub unsafe fn vmresume() {
+    #[cfg(feature = "inline_asm")]
+    asm!("vmresume" :::: "volatile");
+
+    #[cfg(not(feature = "inline_asm"))]
+    crate::asm::x86_64_asm_vmresume();
+}
